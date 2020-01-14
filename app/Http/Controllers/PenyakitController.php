@@ -12,8 +12,7 @@ class PenyakitController extends Controller
     }
     public function index(){
         $penyakits=Penyakit::all();
-        return view('pages.tampilDaftarPenyakit')
-        ->with('penyakits',$penyakits);
+        return view('pages.tampilDaftarPenyakit')->with('penyakits',$penyakits);
     }
     public function show($nama){
         $penyakit=Penyakit::where('nama', '=', $nama)->first();
