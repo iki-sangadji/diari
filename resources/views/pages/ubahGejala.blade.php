@@ -9,7 +9,7 @@
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <strong>Form Gejala</strong> Baru
+                        <strong>Form Ubah Gejala</strong>
                     </div>
                     <div class="card-body card-block">
                         <form action="{{route('updateGejala',$gejala->id)}}" method="post" enctype="multipart/form-data" class="form-horizontal" >
@@ -99,7 +99,7 @@
                             
                             <div class="card-footer">
                                         <button type="submit" class="btn btn-primary btn-sm">
-                                            <i class="fa fa-dot-circle-o"></i> Submit
+                                            <i class="fa fa-dot-circle-o"></i> Simpan
                                         </button>
                                         
                                     </div>

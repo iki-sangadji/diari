@@ -77,6 +77,10 @@
       x.style.display = "block";  
       var btn= document.getElementById("btnMulai");
       btn.style.display = "none";  
+      var bantuan= document.getElementById("bantuan");
+      bantuan.style.display = "none";
+      var header= document.getElementById("header");
+      header.style.display = "block";
       
     }
     function skipQuestion(i) {
@@ -96,7 +100,9 @@
       i++;
       var y = document.getElementById("pertanyaan"+i);
       y.style.display = "block";
-      
+
+      var selesai= document.getElementById("btnSelesai");
+      selesai.style.display = "block";
     }
     function check(id) {
     document.getElementById(id).checked = true;
@@ -106,12 +112,27 @@
     <div class = "col-lg-9">
         <div class ="card">
             <div class="card-header">
-                <strong>Klik "Ya" pada gejala yang anda rasakan</strong>
+               <strong id="header" style="display : none;">Klk "ya" jika mengalami gejala yang terasa</strong>
             </div>
             <div class = "card-body">
                 {{-- <div class = "card-title">
                     <h3 class="text-center title-2"></h3> 
                 </div> --}}
+                <div class="row" id="bantuan">
+                    <div class="card col-lg-9">
+                        <div class="card-header">
+                            <strong>Cara menggunakan</strong>
+                        </div>
+                        <div class="card-body card-block">
+                            
+                                <div class="form-group" >
+                                    <img  src="{{asset('bantuan.png')}}" alt="" style="horizontal-align:middle">
+                                    
+                                </div>
+                                
+                        </div>                        
+                    </div>
+                </div>
                 <form action="{{route('hitungDensitas')}}" method="post" enctype="multipart/form-data" class="form-horizontal" >
                                 {{csrf_field()}}
                     {{-- @foreach ( $gejalas as $gejala ) --}}
@@ -127,8 +148,9 @@
                                     
                                         <div class="form-group" >
                                             <img  src="{{asset('storage/'.$gejalas[$i]->image)}}" alt="" style="horizontal-align:middle">
-                                            <small>Sumber gambar : {{$gejalas[$i]->sumber_gambar}}</small>
+                                            
                                         </div>
+                                        <small>Sumber gambar : {{$gejalas[$i]->sumber_gambar}}</small>
                                         <div class="form-group">
                                             <h4  class="control-label mb-1">{{$gejalas[$i]->pertanyaan}}</h4>
                                         </div>
@@ -148,9 +170,9 @@
                 {{-- @endforeach --}}
                 <div class="card-footer" >
                     <button type="button" class="btn btn-primary btn-sm" id="btnMulai" onclick="firstQuestion()">
-                        <i class="fa fa-dot-circle-o"></i> Mulai
+                        <i class="fa fa-dot-circle-o"></i> Mulai Diagnosa
                     </button>
-                    <button type="submit" class="btn btn-primary btn-sm">
+                    <button type="submit" class="btn btn-primary btn-sm" style="display:none" id="btnSelesai"> 
                         <i class="fa fa-dot-circle-o"></i> Selesai
                     </button>
                 </div>

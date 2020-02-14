@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'PagesController@index');
+Route::get('/', 'GejalaController@pertanyaanPertama');
 Route::get('/tambah-Gejala', 'PagesController@tambahGejala')->middleware('auth')->name("formTambahGejala");
 Route::get('/pertanyaan', 'GejalaController@pertanyaanPertama')->name("pertanyaanPertama");
 Route::post('/hasil-diagnosa', 'GejalaController@hitungDensitas')->name("hitungDensitas");
@@ -32,6 +32,6 @@ Route::get('/hapus-penyakit{id}', 'PenyakitController@destroy')->name("hapusPeny
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'GejalaController@pertanyaanPertama')->name('home');
 
 

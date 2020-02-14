@@ -9,7 +9,7 @@
                 <table class="table table-borderless table-data3">
                             <thead>
                                 <tr>
-                                    <th>Nama Gejala</th>
+                                    <th>Nama Penyakit</th>
                                     <th>Deskripsi</th>
                                     <th>Action</th>
                                     

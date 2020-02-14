@@ -42,8 +42,9 @@
             <div class="header-mobile__bar">
                 <div class="container-fluid">
                     <div class="header-mobile-inner">
-                        <a class="logo" href="index.html">
-                            <img src="images/icon/logo.png" alt="CoolAdmin" />
+                        <a class="logo" href="{{route('home')}}">
+                                {{csrf_field()}}
+                            <img src="{{asset('icondiari2.png')}}" alt="Diari" />
                         </a>
                         <button class="hamburger hamburger--slider" type="button">
                             <span class="hamburger-box">
@@ -104,8 +105,9 @@
         <!-- MENU SIDEBAR-->
         <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
-                <a href="#">
-                    <img src="images/icon/logo.png" alt="Cool Admin" />
+                <a class="logo" href="{{route('home')}}">
+                                {{csrf_field()}}
+                            <img  src="{{asset('icon_diari_fix.png')}}" alt="Diari" />
                 </a>
             </div>
             <div class="menu-sidebar__content js-scrollbar1">
@@ -174,6 +176,7 @@
         <div class="page-container">
             <!-- HEADER DESKTOP-->
             <header class="header-desktop">
+            
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
                         <div class="header-wrap">

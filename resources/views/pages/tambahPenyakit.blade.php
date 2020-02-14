@@ -9,7 +9,7 @@
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <strong>Form Gejala</strong> Baru
+                        <strong>Form Tambah Penyakit</strong> 
                     </div>
                     <div class="card-body card-block">
                         <form action="{{route('storePenyakit')}}" method="post" enctype="multipart/form-data" class="form-horizontal" >
@@ -20,7 +20,7 @@
                                     <label for="text-input" class=" form-control-label">Nama Penyakit</label>
                                 </div>
                                 <div class="col-12 col-md-9">
-                                    <input type="text" id="text-input" name="nama" placeholder="Nama gejala" class="form-control">
+                                    <input type="text" id="text-input" name="nama" placeholder="Nama Penyakit" class="form-control">
                                     @error('nama')
                                         <div class="row form-group">
                                             <p class="fa fa-exclamation"> {{$message}} </p> 
@@ -76,7 +76,7 @@
                             
                             <div class="card-footer">
                                         <button type="submit" class="btn btn-primary btn-sm">
-                                            <i class="fa fa-dot-circle-o"></i> Submit
+                                            <i class="fa fa-dot-circle-o"></i> Simpan
                                         </button>
                                         
                                     </div>
