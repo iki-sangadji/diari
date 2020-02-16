@@ -12,7 +12,7 @@ class GejalaController extends Controller
 {
 
     public function __construct(){
-        $this->middleware('auth', ['except'=>['pertanyaanPertama','hitungDensitas']]);
+        $this->middleware('auth', ['except'=>['pertanyaanPertama','ambilDensitas','buatKesimpulan','hitungDensitas']]);
     }
     public function index(){
         $gejalas= Gejala::all();
@@ -104,17 +104,38 @@ class GejalaController extends Controller
         return redirect('/daftar-gejala');
     }
     public function pertanyaanPertama(){
-        $gejalas= Gejala::All();
+        $gejalas= Gejala::take(7)->get();
         return view("pages.tampilPertanyaan")->with('gejalas',$gejalas);
     }
 
-    public function hitungDensitas(Request $request){
-        $arrayGejala=$request->input("gejala");
+    public function buatKesimpulan(Request $request){
+        $gejalaTerpilih=$request->input("gejalaTerpilih");
+        $arrayGejala=$request->input("arrayGejala");
+       
+        $m=$this->ambilDenstias($gejalaTerpilih);
+        $hasilAkhir=$this->hitungDensitas($m);
+        $indexMax=0;
+        for($l=0;$l<sizeof($hasilAkhir);$l++){
+                
+            if($hasilAkhir[$l]['densitas']>$hasilAkhir[$indexMax]["densitas"]){
+                $indexMax=$l;
+            }
+        }
+
+        $gejalaBaru=Gejala::whereNotIn('nama',$arrayGejala)->get();
+        
+        $hasilAkhir[$indexMax]["densitas"]=round($hasilAkhir[$indexMax]["densitas"]*100, 4);
+        return view("pages.tampilHasil")->with('hasilAkhir',$hasilAkhir[$indexMax])->with('gejalaTerpilih',$gejalaTerpilih)
+        ->with('gejalaBaru',$gejalaBaru);
+    }
+
+    public function ambilDenstias($gejalaTerpilih){
+        
         $m=array();
         $pivot=null;
         
-        for($i=0;$i<sizeof($arrayGejala);$i++){
-            $gejala= Gejala::where('nama', "=", $arrayGejala[$i])->get()->first();
+        for($i=0;$i<sizeof($gejalaTerpilih);$i++){
+            $gejala= Gejala::where('nama', "=", $gejalaTerpilih[$i])->get()->first();
             $densitas=pivot_penyakit_gejala::where('gejala_id','=',$gejala->id)->get()->max('densitas');
             $pivot=pivot_penyakit_gejala::where('gejala_id','=',$gejala->id)->get();
             $penyakit=array();
@@ -124,6 +145,10 @@ class GejalaController extends Controller
              }
             $m[]=array(array("penyakit"=>$penyakit,"densitas"=>$densitas),array("penyakit"=>array("&"),"densitas"=> 1-$densitas));
         }
+        return $m;
+    }
+    public function hitungDensitas($m){
+        
         $hasilAkhir=array();
         $hasilAkhir[]=$m[0][0];
         $hasilAkhir[]=$m[0][1];
@@ -166,17 +191,8 @@ class GejalaController extends Controller
              }
         
         }
-        $indexMax=0;
-        for($l=0;$l<sizeof($hasilAkhir);$l++){
-                
-            if($hasilAkhir[$l]['densitas']>$hasilAkhir[$indexMax]["densitas"]){
-                $indexMax=$l;
-            }
-        }
-        //dd($hasilAkhir);
+        return $hasilAkhir;
         
-        $hasilAkhir[$indexMax]["densitas"]=round($hasilAkhir[$indexMax]["densitas"]*100, 4);
-        return view("pages.tampilHasil")->with('hasilAkhir',$hasilAkhir[$indexMax])->with('gejalas',$arrayGejala);
     }
     
     public function getIndex( $arrayM, $arrayPenyakit){

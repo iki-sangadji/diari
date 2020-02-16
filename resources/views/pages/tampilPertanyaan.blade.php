@@ -105,7 +105,7 @@
       selesai.style.display = "block";
     }
     function check(id) {
-    document.getElementById(id).checked = true;
+    document.getElementById("pilih-"+id).checked = true;
     }
 </script>
 
@@ -133,7 +133,7 @@
                         </div>                        
                     </div>
                 </div>
-                <form action="{{route('hitungDensitas')}}" method="post" enctype="multipart/form-data" class="form-horizontal" >
+                <form action="{{route('buatKesimpulan')}}" method="post" enctype="multipart/form-data" class="form-horizontal" >
                                 {{csrf_field()}}
                     {{-- @foreach ( $gejalas as $gejala ) --}}
                     @for ($i =0 ; $i < sizeof($gejalas) ; $i++)
@@ -158,9 +158,10 @@
                                             <button type="button" class="btn btn-success" onclick="nextQuestion({{$i}},{{$gejalas[$i]->id}})">Ya</button>
                                             <button type="button" class="btn btn-danger" onclick="skipQuestion({{$i}})">Tidak</button>
                                             <ul class="ks-cboxtags" style="display : none;">
-                                                <li><input type="checkbox" id="{{$gejalas[$i]->id}}" name="gejala[]" value="{{$gejalas[$i]->nama}}" ><label for="{{$gejalas[$i]->nama}}">Ya</label></li>
+                                                <li><input type="checkbox" id="pilih-{{$gejalas[$i]->id}}" name="gejalaTerpilih[]" value="{{$gejalas[$i]->nama}}" ><label for="{{$gejalas[$i]->nama}}">Ya</label></li>
                                                 
                                             </ul>
+                                            <input type="text" id="{{$gejalas[$i]->id}}" name="arrayGejala[]" value="{{$gejalas[$i]->nama}}" style="display : none;">
                                         
                                         </div>
                                 </div>                        

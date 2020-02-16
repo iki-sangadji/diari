@@ -14,7 +14,7 @@
 Route::get('/', 'GejalaController@pertanyaanPertama');
 Route::get('/tambah-Gejala', 'PagesController@tambahGejala')->middleware('auth')->name("formTambahGejala");
 Route::get('/pertanyaan', 'GejalaController@pertanyaanPertama')->name("pertanyaanPertama");
-Route::post('/hasil-diagnosa', 'GejalaController@hitungDensitas')->name("hitungDensitas");
+Route::post('/hasil-diagnosa', 'GejalaController@buatKesimpulan')->name("buatKesimpulan");
 Route::post('/storeGejala', 'GejalaController@store')->name("storeGejala");
 Route::get('/daftar-gejala', 'GejalaController@index')->name("tampilDaftarGejala");
 Route::get('/edit-gejala/{id}', 'GejalaController@edit')->name("editGejala");
