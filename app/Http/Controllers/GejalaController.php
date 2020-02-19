@@ -7,6 +7,7 @@ use App\Gejala;
 use App\Penyakit;
 use App\pivot_penyakit_gejala;
 use Illuminate\Support\Facades\DB;
+use Session;
 
 class GejalaController extends Controller
 {
@@ -28,7 +29,7 @@ class GejalaController extends Controller
         $gejala->nama = $request->input('nama');
         $gejala->pertanyaan = $request->input('pertanyaan');
         $gejala->sumber_gambar = $request->input('sumber');
-        $arrayGejala = $request->input('id_penyakit');
+        $arrayPenyakit = $request->input('id_penyakit');
         $arrayDensitas = $request->input('densitas');
         if($request->has('image')){
             // $request->validate([
@@ -41,10 +42,10 @@ class GejalaController extends Controller
         
         $gejala->save();
 
-        for($i=0;$i<sizeof($arrayGejala);$i++){
+        for($i=0;$i<sizeof($arrayPenyakit);$i++){
             if($arrayDensitas[$i]>0){
                 $pivot= new pivot_penyakit_gejala;
-                $pivot->penyakit_id=$arrayGejala[$i];
+                $pivot->penyakit_id=$arrayPenyakit[$i];
                 $pivot->gejala_id= $gejala->id;
                 $pivot->densitas=$arrayDensitas[$i];
                 $pivot->save();
@@ -82,7 +83,7 @@ class GejalaController extends Controller
         $gejala->nama = $request->input('nama');
         $gejala->pertanyaan = $request->input('pertanyaan');
         $gejala->sumber_gambar = $request->input('sumber');
-        $arrayGejala = $request->input('id_penyakit');
+        $arrayPenyakit = $request->input('id_penyakit');
         $arrayDensitas = $request->input('densitas');
         if($request->has('image')){
             $gejala->image=$request->image->store('uploads','public');
@@ -90,29 +91,59 @@ class GejalaController extends Controller
         
         $gejala->save();
 
-        for($i=0;$i<sizeof($arrayGejala);$i++){
-            if($arrayDensitas[$i]>0){
-                $pivot= new pivot_penyakit_gejala;
-                $pivot->penyakit_id=$arrayGejala[$i];
-                $pivot->gejala_id= $gejala->id;
-                $pivot->densitas=$arrayDensitas[$i];
-                $pivot->save();
-            }
+        for($i=0;$i<sizeof($arrayPenyakit);$i++){
+            
+                $temp=DB::table('pivot_penyakit_gejalas')
+                ->where('gejala_id',$gejala->id)
+                ->where('penyakit_id',$arrayPenyakit[$i])
+                ->get();
+                if(sizeof($temp)>0 and $arrayDensitas[$i]>0){
+                    DB::table('pivot_penyakit_gejalas')
+                    ->where('gejala_id',$gejala->id)
+                    ->where('penyakit_id',$arrayPenyakit[$i])
+                    ->update(['densitas' => $arrayDensitas[$i]]);
+                }
+                elseif(sizeof($temp)==0 and $arrayDensitas[$i]>0){
+                    $pivot= new pivot_penyakit_gejala;
+                    $pivot->penyakit_id=$arrayPenyakit[$i];
+                    $pivot->gejala_id= $gejala->id;
+                    $pivot->densitas=$arrayDensitas[$i];
+                    $pivot->save();
+                }
+                elseif(sizeof($temp)>0 and $arrayDensitas[$i]==0){
+                    DB::table('pivot_penyakit_gejalas')
+                    ->where('gejala_id',$gejala->id)
+                    ->where('penyakit_id',$arrayPenyakit[$i])
+                    ->delete();
+                   
+                }
+                
+                
+            
         }
         
         
         return redirect('/daftar-gejala');
     }
     public function pertanyaanPertama(){
-        $gejalas= Gejala::take(7)->get();
+        $gejalas= Gejala::take(6)->get();
         return view("pages.tampilPertanyaan")->with('gejalas',$gejalas);
     }
 
     public function buatKesimpulan(Request $request){
         $gejalaTerpilih=$request->input("gejalaTerpilih");
-        $arrayGejala=$request->input("arrayGejala");
-       
+        
+
         $m=$this->ambilDenstias($gejalaTerpilih);
+        $waktu=$request->input("waktu");
+        if(isset($waktu)){
+            if(Session::has($waktu)){
+                $hasilSebelum=Session::get($waktu);
+                array_unshift($m , $hasilSebelum);
+            }
+        }
+        
+        
         $hasilAkhir=$this->hitungDensitas($m);
         $indexMax=0;
         for($l=0;$l<sizeof($hasilAkhir);$l++){
@@ -122,11 +153,29 @@ class GejalaController extends Controller
             }
         }
 
-        $gejalaBaru=Gejala::whereNotIn('nama',$arrayGejala)->get();
+        $arrayGejala=$request->input("arrayGejala");
         
+        if(Session::has($waktu.'gejalaTerpilih')){
+            $gejalaTerpilihSebelum=Session::get($waktu.'gejalaTerpilih');
+            for($j=sizeof($gejalaTerpilihSebelum)-1;$j>=0;$j--){
+                array_unshift($gejalaTerpilih , $gejalaTerpilihSebelum[$j]);
+            }
+        }
+        if(Session::has($waktu.'arrayGejala')){
+            $arrayGejalaSebelum=Session::get($waktu.'arrayGejala');
+            for($i=sizeof($arrayGejalaSebelum)-1;$i>=0;$i--){
+                array_unshift($arrayGejala , $arrayGejalaSebelum[$i]);
+            }
+            
+        }
+        $gejalaBaru=Gejala::whereNotIn('nama',$arrayGejala)->get();
+        $waktu=\Carbon\Carbon::now()->toDateTimeString();
+        session([$waktu => $hasilAkhir]);
+        session([$waktu.'gejalaTerpilih' => $gejalaTerpilih]);
+        session([$waktu.'arrayGejala' => $arrayGejala]);
         $hasilAkhir[$indexMax]["densitas"]=round($hasilAkhir[$indexMax]["densitas"]*100, 4);
         return view("pages.tampilHasil")->with('hasilAkhir',$hasilAkhir[$indexMax])->with('gejalaTerpilih',$gejalaTerpilih)
-        ->with('gejalaBaru',$gejalaBaru);
+        ->with('gejalaBaru',$gejalaBaru)->with('waktu',$waktu);
     }
 
     public function ambilDenstias($gejalaTerpilih){
@@ -150,8 +199,10 @@ class GejalaController extends Controller
     public function hitungDensitas($m){
         
         $hasilAkhir=array();
-        $hasilAkhir[]=$m[0][0];
-        $hasilAkhir[]=$m[0][1];
+        for($indexM=0; $indexM< sizeof($m[0]);$indexM++){
+            $hasilAkhir[]=$m[0][$indexM];
+        }
+        
         for($i=1;$i<sizeof($m);$i++){
             $jumlah=array();
             $hasil=$hasilAkhir;

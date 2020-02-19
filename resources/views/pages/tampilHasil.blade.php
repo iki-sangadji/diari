@@ -94,6 +94,7 @@
 
          <form action="{{route('buatKesimpulan')}}" method="post" enctype="multipart/form-data" class="form-horizontal" >
                                 {{csrf_field()}}
+            <input type="text"  name="waktu" value="{{$waktu}}" style="display : none;" >
                     @for ($i =0 ; $i < sizeof($gejalaBaru) ; $i++)
                         
                         
@@ -116,19 +117,19 @@
                                             <button type="button" class="btn btn-success" onclick="nextQuestion({{$i}},{{$gejalaBaru[$i]->id}})">Ya</button>
                                             <button type="button" class="btn btn-danger" onclick="skipQuestion({{$i}})">Tidak</button>
                                             <ul class="ks-cboxtags" style="display : none;">
-                                                <li><input type="checkbox" id="{{$gejalaBaru[$i]->id}}" name="gejala[]" value="{{$gejalaBaru[$i]->nama}}" ><label for="{{$gejalaBaru[$i]->nama}}">Ya</label></li>
+                                                <li><input type="checkbox" id="pilih-{{$gejalaBaru[$i]->id}}" name="gejalaTerpilih[]" value="{{$gejalaBaru[$i]->nama}}" ><label for="{{$gejalaBaru[$i]->nama}}">Ya</label></li>
+                                                
                                                 <input type="text" id="{{$gejalaBaru[$i]->id}}" name="arrayGejala[]" value="{{$gejalaBaru[$i]->nama}}" >
                                             </ul>
-                                        
                                         </div>
                                 </div>                        
                             </div>
                         </div>
                     @endfor
                 
-                <div class="card-footer" >
+                <div >
                     <button type="button" class="btn btn-primary btn-sm" id="btnMulai" onclick="firstQuestion()">
-                        <i class="fa fa-dot-circle-o"></i> Mulai Diagnosa
+                        <i class="fa fa-dot-circle-o"></i> Tambah Gejala
                     </button>
                     <button type="submit" class="btn btn-primary btn-sm" style="display:none" id="btnSelesai"> 
                         <i class="fa fa-dot-circle-o"></i> Selesai
