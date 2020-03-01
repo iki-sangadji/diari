@@ -49,6 +49,7 @@ class PenyakitController extends Controller
     private function validasi(Request $request){
         $request->validate([
             'nama'=>'required',
+            'nama' => 'unique:penyakits,nama',
             'deskripsi'=>'required',
             'saran'=>'required',
         ]);

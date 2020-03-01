@@ -150,10 +150,11 @@
                                             <img  src="{{asset('storage/'.$gejalas[$i]->image)}}" alt="" style="horizontal-align:middle">
                                             
                                         </div>
-                                        <small>Sumber gambar : {{$gejalas[$i]->sumber_gambar}}</small>
+                                        
                                         <div class="form-group">
                                             <h4  class="control-label mb-1">{{$gejalas[$i]->pertanyaan}}</h4>
                                         </div>
+                                        <small>Sumber gambar : {{$gejalas[$i]->sumber_gambar}}</small>
                                         <div class="card-footer" >
                                             <button type="button" class="btn btn-success" onclick="nextQuestion({{$i}},{{$gejalas[$i]->id}})">Ya</button>
                                             <button type="button" class="btn btn-danger" onclick="skipQuestion({{$i}})">Tidak</button>

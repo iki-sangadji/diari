@@ -302,7 +302,7 @@ class GejalaController extends Controller
     private function validasi(Request $request){
         $request->validate([
             'nama'=>'required',
-            'nama' => 'unique:penyakits,nama',
+            'nama' => 'unique:gejalas,nama',
             'pertanyaan'=>'required',
             'sumber'=>'required',
         ]);
