@@ -90,8 +90,8 @@
                 </div> 
             </div>
             
-        </div>
-
+        
+          <div class = "card-body">  
          <form action="{{route('buatKesimpulan')}}" method="post" enctype="multipart/form-data" class="form-horizontal" >
                                 {{csrf_field()}}
             <input type="text"  name="waktu" value="{{$waktu}}" style="display : none;" >
@@ -127,7 +127,7 @@
                         </div>
                     @endfor
                 
-                <div >
+                <div class="card-footer">
                     <button type="button" class="btn btn-primary btn-sm" id="btnMulai" onclick="firstQuestion()">
                         <i class="fa fa-dot-circle-o"></i> Tambah Gejala
                     </button>
@@ -136,6 +136,8 @@
                     </button>
                 </div>
         </form>
+        </div>
+        </div>
 
     </div>
     

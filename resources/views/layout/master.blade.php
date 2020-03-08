@@ -44,7 +44,7 @@
                     <div class="header-mobile-inner">
                         <a class="logo" href="{{route('home')}}">
                                 {{csrf_field()}}
-                            <img src="{{asset('icondiari2.png')}}" alt="Diari" />
+                            <img src="{{asset('icon_diari_fix.png')}}" alt="Diari" />
                         </a>
                         <button class="hamburger hamburger--slider" type="button">
                             <span class="hamburger-box">
@@ -58,7 +58,7 @@
                 <div class="container-fluid">
                     <ul class="list-unstyled navbar__list">
                     
-                        @guest
+                        @auth
                             <li class="has-sub">
                                 <a class="js-arrow" href="#">
                                     <i class="fas fa-copy"></i>Gejala</a>
@@ -89,7 +89,7 @@
                                     
                                 </ul>
                             </li>
-                        @endguest
+                        @endauth
                         <li>
                             <a href="{{route("pertanyaanPertama")}}">
                                 <i class="far fa-check-square"></i>Mulai diagnosa</a>
@@ -153,6 +153,10 @@
                                     </li>
                                     
                                 </ul>
+                            </li>
+                            <li>
+                                <a href="{{route("register")}}">
+                                <i class="fas fa-users"></i>Register admin</a>
                             </li>
                             <li>
                                 <a href="{{ route('logout') }}" onclick="event.preventDefault();

@@ -26,6 +26,7 @@
                                             <p class="fa fa-exclamation"> {{$message}} </p> 
                                         </div>
                                     @enderror
+                                    
                                 </div>
                             </div>
                             

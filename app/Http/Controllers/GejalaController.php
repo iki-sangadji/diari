@@ -174,7 +174,8 @@ class GejalaController extends Controller
         session([$waktu.'gejalaTerpilih' => $gejalaTerpilih]);
         session([$waktu.'arrayGejala' => $arrayGejala]);
         $hasilAkhir[$indexMax]["densitas"]=round($hasilAkhir[$indexMax]["densitas"]*100, 4);
-        return view("pages.tampilHasil")->with('hasilAkhir',$hasilAkhir[$indexMax])->with('gejalaTerpilih',$gejalaTerpilih)
+        return view("pages.tampilHasil")->with('hasilAkhir',$hasilAkhir[$indexMax])
+        ->with('gejalaTerpilih',$gejalaTerpilih)
         ->with('gejalaBaru',$gejalaBaru)->with('waktu',$waktu);
     }
 
@@ -185,17 +186,20 @@ class GejalaController extends Controller
         
         for($i=0;$i<sizeof($gejalaTerpilih);$i++){
             $gejala= Gejala::where('nama', "=", $gejalaTerpilih[$i])->get()->first();
-            $densitas=pivot_penyakit_gejala::where('gejala_id','=',$gejala->id)->get()->max('densitas');
+            $densitas=pivot_penyakit_gejala::where('gejala_id','=',$gejala->id)->get()
+                ->max('densitas');
             $pivot=pivot_penyakit_gejala::where('gejala_id','=',$gejala->id)->get();
             $penyakit=array();
              for($j=0;$j<sizeof($pivot);$j++){
                  $temp=Penyakit::where('id','=',$pivot[$j]->penyakit_id)->get()->first();
                  $penyakit[]=$temp->nama;
              }
-            $m[]=array(array("penyakit"=>$penyakit,"densitas"=>$densitas),array("penyakit"=>array("&"),"densitas"=> 1-$densitas));
+            $m[]=array(array("penyakit"=>$penyakit,"densitas"=>$densitas)
+                ,array("penyakit"=>array("&"),"densitas"=> 1-$densitas));
         }
         return $m;
     }
+    
     public function hitungDensitas($m){
         
         $hasilAkhir=array();
