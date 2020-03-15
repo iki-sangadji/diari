@@ -112,7 +112,7 @@
     <div class = "col-lg-9">
         <div class ="card">
             <div class="card-header">
-               <strong id="header" style="display : none;">Klk "ya" jika mengalami gejala yang terasa</strong>
+               <strong id="header" style="display : none;">Klik "ya" jika mengalami gejala yang ditampilkan</strong>
             </div>
             <div class = "card-body">
                 {{-- <div class = "card-title">
