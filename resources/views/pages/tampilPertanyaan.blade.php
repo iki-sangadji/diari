@@ -170,7 +170,7 @@
                         </div>
                     @endfor
                 {{-- @endforeach --}}
-                <div class="card-footer" >
+                <div class="card-footer" style="padding-bottom: 50px">
                     <button type="button" class="btn btn-primary btn-sm" id="btnMulai" onclick="firstQuestion()">
                         <i class="fa fa-dot-circle-o"></i> Mulai Diagnosa
                     </button>

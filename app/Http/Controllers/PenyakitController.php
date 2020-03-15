@@ -22,6 +22,7 @@ class PenyakitController extends Controller
         $this->validasi($request);
         $request->validate([
             'nama'=>'required',
+            'nama' => 'unique:penyakits,nama',
         ]);
         $penyakit= new Penyakit();
         $penyakit->nama=$request->input('nama');
@@ -49,7 +50,6 @@ class PenyakitController extends Controller
     private function validasi(Request $request){
         $request->validate([
             'nama'=>'required',
-            'nama' => 'unique:penyakits,nama',
             'deskripsi'=>'required',
             'saran'=>'required',
         ]);

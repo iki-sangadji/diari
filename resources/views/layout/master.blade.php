@@ -44,7 +44,7 @@
                     <div class="header-mobile-inner">
                         <a class="logo" href="{{route('home')}}">
                                 {{csrf_field()}}
-                            <img src="{{asset('icon_diari_fix.png')}}" alt="Diari" />
+                            <img  src="{{asset('icon_diari_fix.png')}}" alt="Diari"  width="100" height="100"/>
                         </a>
                         <button class="hamburger hamburger--slider" type="button">
                             <span class="hamburger-box">
@@ -56,9 +56,18 @@
             </div>
             <nav class="navbar-mobile">
                 <div class="container-fluid">
-                    <ul class="list-unstyled navbar__list">
-                    
-                        @auth
+                    <ul class="navbar-mobile__list list-unstyled">
+                        <li>
+                            <a href="{{route("pertanyaanPertama")}}">
+                                <i class="far fa-check-square"></i>Mulai diagnosa</a>
+                        </li>
+                        @if(Auth::guest())
+                            <li>
+                                <a href="{{route('login')}}">
+                                <i class="fa fa-user"></i>Admin</a>
+                            </li>
+                            
+                        @else
                             <li class="has-sub">
                                 <a class="js-arrow" href="#">
                                     <i class="fas fa-copy"></i>Gejala</a>
@@ -89,13 +98,19 @@
                                     
                                 </ul>
                             </li>
-                        @endauth
-                        <li>
-                            <a href="{{route("pertanyaanPertama")}}">
-                                <i class="far fa-check-square"></i>Mulai diagnosa</a>
-                        </li>
-                        
-                        
+                            <li>
+                                <a href="{{route("register")}}">
+                                <i class="fas fa-users"></i>Register admin</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                    document.getElementById('logout-form').submit();">
+                                    <i class="zmdi zmdi-power"></i>Logout</a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    {{ csrf_field() }}
+                                </form>
+                            </li>
+                        @endif
                     </ul>
                 </div>
             </nav>
@@ -107,7 +122,7 @@
             <div class="logo">
                 <a class="logo" href="{{route('home')}}">
                                 {{csrf_field()}}
-                            <img  src="{{asset('icon_diari_fix.png')}}" alt="Diari" />
+                    <img  src="{{asset('icon_diari_fix.png')}}" alt="Diari" />
                 </a>
             </div>
             <div class="menu-sidebar__content js-scrollbar1">

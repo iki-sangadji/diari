@@ -24,6 +24,7 @@ class GejalaController extends Controller
         $this->validasi($request);
         $request->validate([
             'image'=>'required|image',
+            'nama' => 'unique:gejalas,nama',
         ]);
         $gejala = new Gejala;
         $gejala->nama = $request->input('nama');
@@ -199,7 +200,7 @@ class GejalaController extends Controller
         }
         return $m;
     }
-    
+
     public function hitungDensitas($m){
         
         $hasilAkhir=array();
@@ -222,7 +223,8 @@ class GejalaController extends Controller
                        $tempPenyakit2=$this->getIrisan($m[$i][$j]["penyakit"], $hasil[$k]["penyakit"]);
                        $tempDensitas2=$m[$i][$j]["densitas"] * $hasil[$k]["densitas"];
                        
-                       if($tempPenyakit2[0]=="&" && (!($m[$i][$j]["penyakit"][0]=="&") || !($hasil[$k]["penyakit"][0]=="&")) ){
+                       if($tempPenyakit2[0]=="&" && (!($m[$i][$j]["penyakit"][0]=="&") 
+                            || !($hasil[$k]["penyakit"][0]=="&")) ){
                            $pembagi=$pembagi+$tempDensitas2;
                           
                        }else{
@@ -283,7 +285,7 @@ class GejalaController extends Controller
         } else{
             for($i=0;$i<sizeof($m1);$i++){
                 for($j=0;$j<sizeof($m2);$j++){
-                    if($m1[$i]==$m2[$j] && $this->unik($m1[$i],$hasil)){
+                    if($m1[$i]==$m2[$j] && $this->isUnik($m1[$i],$hasil)){
                         $hasil[]=$m1[$i];
                     }
                 }
@@ -295,7 +297,7 @@ class GejalaController extends Controller
         }
         return $hasil;
     }
-    public function unik($a, array $b){
+    public function isUnik($a, array $b){
         for($i=0;$i<sizeof($b);$i++){
             if($b[$i]==$a){
                 return false;
@@ -306,7 +308,6 @@ class GejalaController extends Controller
     private function validasi(Request $request){
         $request->validate([
             'nama'=>'required',
-            'nama' => 'unique:gejalas,nama',
             'pertanyaan'=>'required',
             'sumber'=>'required',
         ]);
