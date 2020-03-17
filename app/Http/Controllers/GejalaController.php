@@ -202,7 +202,29 @@ class GejalaController extends Controller
     }
 
     public function hitungDensitas($m){
-        
+          $m=array( 
+                  array(
+                      array("penyakit"=>["osteoartrithis","asam urat" ],"densitas"=> 0.8)
+                      ,array("penyakit"=>array("&"),"densitas"=> 0.2)
+                  ),
+                  array(
+                    array("penyakit"=>["asam urat"],"densitas"=> 0.8)
+                      ,array("penyakit"=>array("&"),"densitas"=> 0.2)
+                  ),
+                  array(
+                    array("penyakit"=>["asam urat"],"densitas"=> 0.6)
+                      ,array("penyakit"=>array("&"),"densitas"=> 0.4)
+                  ),
+                 array(
+                    array("penyakit"=>["osteoartrithis"],"densitas"=> 0.6)
+                      ,array("penyakit"=>array("&"),"densitas"=> 0.4)
+                 )
+             );
+            // $m=array( 
+            //     array(
+            //         array("penyakit"=>["&"],"densitas"=>0.5)
+            //     )
+            // );
         $hasilAkhir=array();
         for($indexM=0; $indexM< sizeof($m[0]);$indexM++){
             $hasilAkhir[]=$m[0][$indexM];
@@ -248,6 +270,7 @@ class GejalaController extends Controller
              }
         
         }
+        dd($hasilAkhir);
         return $hasilAkhir;
         
     }

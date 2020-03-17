@@ -142,7 +142,7 @@ return [
             'required' => ' Pertanyaan untuk gejala harus diisi',
         ],
         'sumber' => [
-            'required' => ' Sumber pertanyaan harus diisi',
+            'required' => ' Sumber gambar harus diisi',
         ],
         'deskripsi' => [
             'required' => ' Deskripsi penyakit harus diisi',
