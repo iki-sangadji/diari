@@ -134,7 +134,9 @@ class GejalaController extends Controller
     public function buatKesimpulan(Request $request){
         $gejalaTerpilih=$request->input("gejalaTerpilih");
         
-
+        $request->validate([
+            'gejalaTerpilih'=>'required',
+        ]);
         $m=$this->ambilDenstias($gejalaTerpilih);
         $waktu=$request->input("waktu");
         if(isset($waktu)){
@@ -202,24 +204,24 @@ class GejalaController extends Controller
     }
 
     public function hitungDensitas($m){
-          $m=array( 
-                  array(
-                      array("penyakit"=>["osteoartrithis","asam urat" ],"densitas"=> 0.8)
-                      ,array("penyakit"=>array("&"),"densitas"=> 0.2)
-                  ),
-                  array(
-                    array("penyakit"=>["asam urat"],"densitas"=> 0.8)
-                      ,array("penyakit"=>array("&"),"densitas"=> 0.2)
-                  ),
-                  array(
-                    array("penyakit"=>["asam urat"],"densitas"=> 0.6)
-                      ,array("penyakit"=>array("&"),"densitas"=> 0.4)
-                  ),
-                 array(
-                    array("penyakit"=>["osteoartrithis"],"densitas"=> 0.6)
-                      ,array("penyakit"=>array("&"),"densitas"=> 0.4)
-                 )
-             );
+        //   $m=array( 
+        //           array(
+        //               array("penyakit"=>["osteoartrithis","asam urat" ],"densitas"=> 0.8)
+        //               ,array("penyakit"=>array("&"),"densitas"=> 0.2)
+        //           ),
+        //           array(
+        //             array("penyakit"=>["asam urat"],"densitas"=> 0.8)
+        //               ,array("penyakit"=>array("&"),"densitas"=> 0.2)
+        //           ),
+        //           array(
+        //             array("penyakit"=>["asam urat"],"densitas"=> 0.6)
+        //               ,array("penyakit"=>array("&"),"densitas"=> 0.4)
+        //           ),
+        //          array(
+        //             array("penyakit"=>["osteoartrithis"],"densitas"=> 0.6)
+        //               ,array("penyakit"=>array("&"),"densitas"=> 0.4)
+        //          )
+        //      );
             // $m=array( 
             //     array(
             //         array("penyakit"=>["&"],"densitas"=>0.5)
@@ -270,7 +272,7 @@ class GejalaController extends Controller
              }
         
         }
-        dd($hasilAkhir);
+        //dd($hasilAkhir);
         return $hasilAkhir;
         
     }

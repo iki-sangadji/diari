@@ -50,7 +50,7 @@
                     <h3> Penyakit yang mungkin dialami : </h2>
                     <div class="col-lg-5">
                         <!-- TOP CAMPAIGN-->
-                            <div class="card">
+                            <div class="card" style="padding: 10px">
                                 <table class="table table-borderless table-data3">
                                     <tbody>
                                        @foreach ($hasilAkhir['penyakit'] as $penyakit)
@@ -60,6 +60,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                <small>Klik pada nama penyakit untuk melihat detail</small>
                             </div>
                         <!--  END TOP CAMPAIGN-->
                     </div>

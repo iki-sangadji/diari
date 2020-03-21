@@ -199,7 +199,9 @@
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
                         <div class="header-wrap">
-                            
+                            <H4>
+                                Sistem ini dibangun dengan tujuan untuk mendeteksi penyakit sendi dengan metode Dempster-Shafer
+                            </H4>
                             <div class="header-button">
                                 
                                 <div class="account-wrap">

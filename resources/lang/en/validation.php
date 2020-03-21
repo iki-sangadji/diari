@@ -150,6 +150,9 @@ return [
         'saran' => [
             'required' => ' Saran harus diisi',
         ],
+        'gejalaTerpilih' => [
+            'required' => ' Harap pilih gejala minimal 4',
+        ],
     ],
 
     /*

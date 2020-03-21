@@ -88,6 +88,10 @@
       x.style.display = "none";
       
       i++;
+      if (i == 6) {
+        var selesai= document.getElementById("btnSelesai");
+        selesai.style.display = "block";
+      }
       var y = document.getElementById("pertanyaan"+i);
       y.style.display = "block";
       
@@ -100,9 +104,11 @@
       i++;
       var y = document.getElementById("pertanyaan"+i);
       y.style.display = "block";
-
-      var selesai= document.getElementById("btnSelesai");
-      selesai.style.display = "block";
+      if (i >= 4) {
+        var selesai= document.getElementById("btnSelesai");
+        selesai.style.display = "block";
+      }
+      
     }
     function check(id) {
     document.getElementById("pilih-"+id).checked = true;
@@ -122,11 +128,16 @@
                     <div class="card col-lg-9">
                         <div class="card-header">
                             <strong>Cara menggunakan</strong>
+                            @error('gejalaTerpilih')
+                                <div class="row form-group">
+                                    <p class="fa fa-exclamation"> {{$message}} </p> 
+                                </div>
+                            @enderror
                         </div>
                         <div class="card-body card-block">
                             
                                 <div class="form-group" >
-                                    <img  src="{{asset('bantuan.png')}}" alt="" style="horizontal-align:middle">
+                                    <img  src="{{asset('bantuan3.png')}}" alt="" style="horizontal-align:middle">
                                     
                                 </div>
                                 
